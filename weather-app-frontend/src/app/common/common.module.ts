@@ -16,6 +16,8 @@ import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from 'primeng/password';
 import { DataViewModule } from 'primeng/dataview';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ChartModule } from 'primeng/chart';
+
 
 @NgModule({
     declarations: [
@@ -37,8 +39,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
    InputTextModule,
    PasswordModule,
    DataViewModule,
-   ProgressSpinnerModule
-  //  DataViewLayoutOptions
+   ProgressSpinnerModule,
+   ChartModule
   
     ],
     exports: [
@@ -56,7 +58,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
    RippleModule,
    InputTextModule,
    PasswordModule,
-   ProgressSpinnerModule
+   ProgressSpinnerModule,
+   ChartModule
    
 
     ],

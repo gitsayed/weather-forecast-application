@@ -41,7 +41,7 @@
     <div class="com" [style]="{'margin-top':'1%!important'}">
 
         <div class="row" *ngIf="dailyResults.length>0">
-
+          
             <p-table #dt1 [value]="dailyResults" dataKey="id" [rows]="10"
                 (onRowSelect)="onDailyWeatherForecastRowSelect($event)" selectionMode="single"
                 [(selection)]="selectedDailyWeather" [rowsPerPageOptions]="[10]" [loading]="loading" [paginator]="true"
@@ -88,7 +88,7 @@
                         <th>
                             <div class="flex align-items-center">
                                 {{ 'Rain Sum in '+ daily_units.rain_sum }}
-                                <p-columnFilter type="numeric" field="rain_sum" matchMode="contains"></p-columnFilter>
+                                <p-columnFilter type="text" field="rain_sum" matchMode="contains"></p-columnFilter>
                             </div>
                         </th>
                         <th>
@@ -153,10 +153,17 @@
 
         <p-dialog header="Hourly Weather Forcast"  (onHide)="onCloseHourlyModal($event)"
          [(visible)]="modalVisible" [modal]="true"
-         [style]="{ 'width': '90%', 'height':'80%' }" [draggable]="false" [resizable]="false">
+         [style]="{ 'width': '90%', 'height':'90%' }"  [draggable]="false" [resizable]="false" [maximizable]="true">
 
          <div class="card" *ngIf="hourlyResults.length>0" style="width: 100%; height: 100;">
-
+            <div >
+                <div class="flex">
+                    <h3> Hourly Weather Forecast Chart </h3>
+                    <br/><br/>
+                </div>
+                <p-chart type="line" [data]="chartDataSet" [options]="chartOptions"></p-chart>
+            </div>
+            <br/><br/><br/>
             <p-table #dt2 [value]="hourlyResults" dataKey="id" [rows]="10"
                 (onRowSelect)="onHourlyWeatherForecastRowSelect($event)" selectionMode="single"
                 [(selection)]="selectedDailyWeather" [rowsPerPageOptions]="[10]" [loading]="loading" [paginator]="true"
@@ -171,20 +178,20 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>
+                        <th  style="min-width:15rem">
                             <div class="flex align-items-center">
                                 Hourly Time
                                 <p-columnFilter type="text" field="time" matchMode="contains"></p-columnFilter>
                             </div>
                         </th>
-                        <th>
+                        <th  style="min-width:15rem">
                             <div class="flex align-items-center">
                                 {{ 'Temperature 2m in '+ hourly_units.temperature_2m}}
                                 <p-columnFilter type="text" field="temperature_2m"
                                     matchMode="contains"></p-columnFilter>
                             </div>
                         </th>
-                        <th>
+                        <th  style="min-width:15rem">
                             <div class="flex align-items-center">
                                 {{ 'Apparent temperature in '+ hourly_units.apparent_temperature}}
                                 <p-columnFilter type="text" field="apparent_temperature"
@@ -192,7 +199,7 @@
                             </div>
                         </th>
 
-                        <th>
+                        <th  style="min-width:15rem">
                             <div class="flex align-items-center">
                                 {{'Rain  in '+ hourly_units.rain }}
                                 <p-columnFilter type="text" field="rain"
@@ -200,7 +207,7 @@
                             </div>
                         </th>
 
-                        <th>
+                        <th  style="min-width:15rem">
                             <div class="flex align-items-center">
                                 {{ 'Pressure msl in '+ hourly_units.pressure_msl }}
                                 <p-columnFilter type="text" field="pressure_msl"
@@ -208,17 +215,17 @@
                             </div>
                         </th>
 
-                        <th>
+                        <th  style="min-width:15rem">
                             <div class="flex align-items-center">
                                 {{ 'Surface pressure in '+ hourly_units.surface_pressure }}
                                 <p-columnFilter type="text" field="surface_pressure"
                                     matchMode="contains"></p-columnFilter>
                             </div>
                         </th>
-                        <th>
+                        <th  style="min-width:15rem">
                             <div class="flex align-items-center">
                                 {{ 'Visibility in '+ hourly_units.visibility }}
-                                <p-columnFilter type="numeric" field="visibility"
+                                <p-columnFilter type="text" field="visibility"
                                  matchMode="contains"></p-columnFilter>
                             </div>
                         </th>
@@ -229,28 +236,28 @@
                                  matchMode="contains"></p-columnFilter>
                             </div>
                         </th>
-                        <th>
+                        <th  style="min-width:15rem">
                             <div class="flex align-items-center">
                                 {{ 'Wind speed 80m in '+ hourly_units.wind_speed_80m }}
                                 <p-columnFilter type="text" field="wind_speed_80m"
                                  matchMode="contains"></p-columnFilter>
                             </div>
                         </th>
-                        <th>
+                        <th  style="min-width:15rem">
                             <div class="flex align-items-center">
                                 {{ 'Temperature 80m in '+ hourly_units.temperature_80m }}
                                 <p-columnFilter type="text" field="temperature_80m"
                                  matchMode="contains"></p-columnFilter>
                             </div>
                         </th>
-                        <th>
+                        <th  style="min-width:15rem">
                             <div class="flex align-items-center">
                                 {{ 'Temperature 180m in '+ hourly_units.temperature_180m }}
                                 <p-columnFilter type="text" field="temperature_180m"
                                  matchMode="contains"></p-columnFilter>
                             </div>
                         </th>
-                        <th>
+                        <th  style="min-width:15rem">
                             <div class="flex align-items-center">
                                 {{ 'Day/Night ' }}
                                 <p-columnFilter type="text" field="is_day"

@@ -7,12 +7,18 @@ import { MeteoLocationService } from '../location-services/meteo-location-servic
 import { GeoCity, Model } from '../model/city-location.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
+const documentStyle = getComputedStyle(document.documentElement);
+const textColor = documentStyle.getPropertyValue('--text-color');
+const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 @Component({
   selector: 'app-weather-forcecast',
   templateUrl: './weather-forecast.component.html',
   styleUrls: ['./weather-forecast.component.css']
 })
 export class WeatherForcecastComponent implements OnInit {
+
+
 
   loading: boolean = false;
 
@@ -31,6 +37,9 @@ export class WeatherForcecastComponent implements OnInit {
 
   modalVisible = false;
   modalLoading = false;
+
+  chartOptions: any;
+  chartDataSet: any;
 
   constructor(
     private toast: ToastService,
@@ -89,6 +98,8 @@ export class WeatherForcecastComponent implements OnInit {
 
   }
 
+
+
   onDailyWeatherForecastRowSelect(event: any) {
     this.toast.info('Selected Day : ' + event.data.time);
     this.fetchHoulyWeatherForecastInfo(event.data.time);
@@ -112,6 +123,7 @@ export class WeatherForcecastComponent implements OnInit {
         this.modalLoading = false;
         console.log('Houlry', res);
         if (res) {
+          this.arrangeCharDataSet(res);
           this.hourlyResults = [];
           this.hourly_units = res.hourly_units;
           let tempArr = res.hourly.time;
@@ -126,17 +138,17 @@ export class WeatherForcecastComponent implements OnInit {
                 precipitation_probability: res.hourly.precipitation_probability[i],
                 precipitation: res.hourly.precipitation[i],
                 rain: res.hourly.rain[i],
-                weather_code :  res.hourly.weather_code [i],
-                pressure_msl : res.hourly.pressure_msl[i],
-                surface_pressure : res.hourly.surface_pressure[i] ,
-                cloud_cover:res.hourly.cloud_cover[i],
+                weather_code: res.hourly.weather_code[i],
+                pressure_msl: res.hourly.pressure_msl[i],
+                surface_pressure: res.hourly.surface_pressure[i],
+                cloud_cover: res.hourly.cloud_cover[i],
                 visibility: res.hourly.visibility[i],
-                wind_speed_10m :res.hourly.wind_speed_10m[i],
+                wind_speed_10m: res.hourly.wind_speed_10m[i],
                 wind_speed_80m: res.hourly.wind_speed_80m[i],
                 temperature_80m: res.hourly.temperature_80m[i],
                 temperature_120m: res.hourly.temperature_120m[i],
                 temperature_180m: res.hourly.temperature_180m[i],
-                is_day:res.hourly.is_day[i]
+                is_day: res.hourly.is_day[i]
               }
 
               this.hourlyResults.push(obj);
@@ -158,7 +170,136 @@ export class WeatherForcecastComponent implements OnInit {
 
   }
 
+  arrangeCharDataSet(data: any) {
+    this.chartDataSet = {
+      labels: data.hourly.time,
+      datasets: [
+        {
+          label: 'Temperature 2m',
+          data: data.hourly.temperature_2m,
+          fill: false,
+          tension: 0.4,
+          backgroundColor: '#FF0000',
+          borderColor: '#FF0000'
+        },
+        {
+          label: 'Apparent Temperature',
+          data: data.hourly.apparent_temperature,
+          fill: false,
+          tension: 0.4,
+          borderColor: '#16F529',
+          backgroundColor: '#16F529'
+        },
+        {
+          label: 'Rain',
+          data: data.hourly.rain,
+          fill: false,
+          borderColor: '#0000FF',
+          tension: 0.4,
+          backgroundColor: '#0000FF'
+        },
+        {
+          label: 'Pressure msl',
+          data: data.hourly.pressure_msl,
+          fill: false,
+          borderColor: '#20B2AA',
+          tension: 0.4,
+          backgroundColor: '#20B2AA'
+        },
+        {
+          label: 'Surface Pressure',
+          data: data.hourly.surface_pressure,
+          fill: false,
+          type: 'line',
+          borderColor: '#e52165',
+          tension: 0.4,
+          backgroundColor: '#e52165'
+        },
+        {
+          label: 'Visibility',
+          data: data.hourly.visibility,
+          fill: false,
+          type: 'line',
+          borderColor: '#0000FF',
+          tension: 0.4,
+          backgroundColor: '#0000FF'
+        },
+        {
+          label: 'Wind speed 10m',
+          data: data.hourly.wind_speed_10m,
+          fill: false,
+          borderColor: '#e2d810',
+          tension: 0.4,
+          backgroundColor: '#e2d810'
+        },
+        {
+          label: 'Wind speed 80m',
+          data: data.hourly.wind_speed_80m,
+          fill: false,
+          borderColor: '#00FF00',
+          tension: 0.4,
+          backgroundColor: '#00FF00'
+        },
+        {
+          label: 'Temperature 80m',
+          data: data.hourly.temperature_80m,
+          fill: false,
+          borderColor: '#FFD700',
+          tension: 0.4,
+          backgroundColor: '#FFD700'
+        },
+        {
+          label: 'Temperature 180m',
+          data: data.hourly.temperature_180m,
+          fill: false,
+          borderColor: '#DE3163',
+          tension: 0.4,
+          backgroundColor: '#DE3163'
+        },
+        {
+          label: 'Day/Night',
+          data: data.hourly.is_day,
+          fill: false,
+          borderColor: '#9FE2BF',
+          tension: 0.4,
+          backgroundColor: '#9FE2BF'
+        }
+      ]
+    };
 
+
+    this.chartOptions = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.6,
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder
+          }
+        },
+        y: {
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder
+          }
+        }
+      }
+    };
+
+
+  }
 
 
 
