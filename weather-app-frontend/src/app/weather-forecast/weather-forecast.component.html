@@ -1,0 +1,343 @@
+<div *ngIf="!loading">
+
+    <div class="card flex justify-content-center" [style]="{'margin-top':'1%','margin-left':'4%', 'min-width':'92%'}">
+        <h2>{{'Weather forecast for location: '+locationDetail?.name}}</h2>
+
+
+        <table class="table table-striped" style="width: 30%; margin-top: 2%;">
+         
+                <tr>
+                    <th scope="col">{{'City name'}}</th>
+                    <td scope="row">{{ locationDetail.name }}</td>
+                
+                </tr>
+                <tr>
+                    <th>{{'Latitude'}}</th>
+                    <td>{{ locationDetail.latitude }}</td>
+                
+                </tr>
+                
+                <tr>
+                    <th>{{'Longitude'}}</th>
+                    <td>{{ locationDetail.longitude }}</td>
+                
+                </tr>
+                
+                <tr>
+                    <th>{{'Country'}}</th>
+                    <td>{{ locationDetail.country }}</td>
+                
+                </tr> 
+                <tr>
+                    <th>{{'Timezone'}}</th>
+                    <td>{{ locationDetail.timezone }}</td>
+                
+                </tr>
+           
+         
+        </table>
+    </div>
+
+    <div class="com" [style]="{'margin-top':'1%!important'}">
+
+        <div class="row" *ngIf="dailyResults.length>0">
+
+            <p-table #dt1 [value]="dailyResults" dataKey="id" [rows]="10"
+                (onRowSelect)="onDailyWeatherForecastRowSelect($event)" selectionMode="single"
+                [(selection)]="selectedDailyWeather" [rowsPerPageOptions]="[10]" [loading]="loading" [paginator]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [globalFilterFields]="['time', 'weather_code', 'temperature_2m_min', 'temperature_2m_max', 'rain_sum',  'wind_speed_10m_max' ]"
+                [style]="{'border': '1px solid gray'}">
+
+                <ng-template pTemplate="caption">
+                    <div class="flex">
+                        <h3> Daily Weather Forecast Table </h3>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            <div class="flex align-items-center">
+                                Day
+                                <p-columnFilter type="text" field="time" matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Temperature (Min) in '+ daily_units.temperature_2m_min}}
+                                <p-columnFilter type="text" field="temperature_2m_min"
+                                    matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="flex align-items-center">
+                                {{'Temperature (Max) in '+ daily_units.temperature_2m_max }}
+                                <p-columnFilter type="text" field="temperature_2m_max"
+                                    matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Wind Speed in '+ daily_units.wind_speed_10m_max }}
+                                <p-columnFilter type="text" field="wind_speed_10m_max"
+                                    matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Rain Sum in '+ daily_units.rain_sum }}
+                                <p-columnFilter type="numeric" field="rain_sum" matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                Weather Code
+                                <p-columnFilter type="text" field="weather_code" matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+
+
+                    </tr>
+                </ng-template>
+
+                <!-- ******************* main data body ************************* -->
+                <ng-template pTemplate="body" let-dailyWeather let-index="rowIndex">
+                    <tr [pSelectableRow]="dailyWeather" [pSelectableRowIndex]="index">
+                        <td>
+                            {{ dailyWeather.time }}
+                        </td>
+                        <td>
+                            {{ dailyWeather.temperature_2m_min }}
+                        </td>
+
+                        <td>
+                            {{ dailyWeather.temperature_2m_max }}
+                        </td>
+
+                        <td>
+                            {{ dailyWeather.wind_speed_10m_max }}
+                        </td>
+
+                        <td>
+                            {{ dailyWeather.rain_sum }}
+                        </td>
+
+                        <td>
+                            {{ dailyWeather.weather_code }}
+                        </td>
+
+
+                    </tr>
+
+                </ng-template>
+
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No records found.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <p-dialog header="Hourly Weather Forcast"  (onHide)="onCloseHourlyModal($event)"
+         [(visible)]="modalVisible" [modal]="true"
+         [style]="{ 'width': '90%', 'height':'80%' }" [draggable]="false" [resizable]="false">
+
+         <div class="card" *ngIf="hourlyResults.length>0" style="width: 100%; height: 100;">
+
+            <p-table #dt2 [value]="hourlyResults" dataKey="id" [rows]="10"
+                (onRowSelect)="onHourlyWeatherForecastRowSelect($event)" selectionMode="single"
+                [(selection)]="selectedDailyWeather" [rowsPerPageOptions]="[10]" [loading]="loading" [paginator]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [globalFilterFields]="['time', 'weather_code', 'temperature_2m_min', 'temperature_2m_max', 'rain_sum',  'wind_speed_10m_max' ]"
+                [style]="{'border': '1px solid gray'}">
+
+                <ng-template pTemplate="caption">
+                    <div class="flex">
+                        <h3> Hourly Weather Forecast Table </h3>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            <div class="flex align-items-center">
+                                Hourly Time
+                                <p-columnFilter type="text" field="time" matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Temperature 2m in '+ hourly_units.temperature_2m}}
+                                <p-columnFilter type="text" field="temperature_2m"
+                                    matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Apparent temperature in '+ hourly_units.apparent_temperature}}
+                                <p-columnFilter type="text" field="apparent_temperature"
+                                    matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="flex align-items-center">
+                                {{'Rain  in '+ hourly_units.rain }}
+                                <p-columnFilter type="text" field="rain"
+                                    matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Pressure msl in '+ hourly_units.pressure_msl }}
+                                <p-columnFilter type="text" field="pressure_msl"
+                                    matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Surface pressure in '+ hourly_units.surface_pressure }}
+                                <p-columnFilter type="text" field="surface_pressure"
+                                    matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Visibility in '+ hourly_units.visibility }}
+                                <p-columnFilter type="numeric" field="visibility"
+                                 matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Wind speed 10m in '+ hourly_units.wind_speed_10m }}
+                                <p-columnFilter type="text" field="wind_speed_10m"
+                                 matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Wind speed 80m in '+ hourly_units.wind_speed_80m }}
+                                <p-columnFilter type="text" field="wind_speed_80m"
+                                 matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Temperature 80m in '+ hourly_units.temperature_80m }}
+                                <p-columnFilter type="text" field="temperature_80m"
+                                 matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Temperature 180m in '+ hourly_units.temperature_180m }}
+                                <p-columnFilter type="text" field="temperature_180m"
+                                 matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                {{ 'Day/Night ' }}
+                                <p-columnFilter type="text" field="is_day"
+                                 matchMode="contains"></p-columnFilter>
+                            </div>
+                        </th>
+
+
+                    </tr>
+                </ng-template>
+
+                <!-- ******************* main data body ************************* -->
+                <ng-template pTemplate="body" let-hourlyWeather let-index="rowIndex">
+                    <tr [pSelectableRow]="hourlyWeather" [pSelectableRowIndex]="index">
+                        <td>
+                            {{ hourlyWeather.time }}
+                        </td>
+                        <td>
+                            {{ hourlyWeather.temperature_2m }}
+                        </td>
+
+                        <td>
+                            {{ hourlyWeather.apparent_temperature }}
+                        </td>
+
+                        <td>
+                            {{ hourlyWeather.rain }}
+                        </td>
+
+                        <td>
+                            {{ hourlyWeather.pressure_msl }}
+                        </td>
+
+                        <td>
+                            {{ hourlyWeather.surface_pressure }}
+                        </td>
+                        <td>
+                            {{ hourlyWeather.visibility }}
+                        </td>
+                        <td>
+                            {{ hourlyWeather.wind_speed_10m }}
+                        </td>
+                        <td>
+                            {{ hourlyWeather.wind_speed_80m }}
+                        </td>
+                        <td>
+                            {{ hourlyWeather.temperature_80m }}
+                        </td>
+                        <td>
+                            {{ hourlyWeather.temperature_180m }}
+                        </td>
+                        <td>
+                            {{ hourlyWeather.is_day=='1'? 'Day':'Night' }}
+                        </td>
+
+
+                    </tr>
+
+                </ng-template>
+
+
+            </p-table>
+        </div>
+
+         <div class="row" *ngIf="modalLoading" style="margin-left: 2%;" strokeWidth="8">
+            <div><h4>Please wait...</h4></div>
+           <div><p-progressSpinner></p-progressSpinner></div>
+        </div>
+        </p-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>

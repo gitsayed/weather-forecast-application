@@ -1,0 +1,50 @@
+.access-denied-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .error-content {
+    text-align: center;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .error-content h1 {
+    font-size: 10em;
+    margin: 0;
+    color: #ff6b6b;
+  }
+  
+  .error-content h2 {
+    font-size: 2em;
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  .error-content p {
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .back-home-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: white;
+    background-color: #ff6b6b;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-home-button:hover {
+    background-color: #ff4c4c;
+  }
+  

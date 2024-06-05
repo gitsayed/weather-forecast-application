@@ -1,0 +1,31 @@
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+
+.input-label {
+    font-size: 16px!important;
+    margin-top: -3%!important;
+    color: black;
+  }
+
+
+  body .md-inputfield-2 .ui-message.ui-messages-error {
+    background-color: transparent;
+    border: 0 none;
+    margin: 0px;
+    color: #e62a10;
+    font-size: 0.75em;
+  }
+
+  .ui-messages-error {
+    background-color: transparent !important;
+    border: 0 none !important;
+    color: #e62a10 !important;
+    font-size: 0.75em !important;
+    padding: 5px !important;
+    
+  }
+
+  .com{
+    margin: 5%;
+  }

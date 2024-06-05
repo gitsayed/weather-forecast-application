@@ -1,0 +1,111 @@
+<div class="col-md-12" *ngIf="action==='login'">
+  <div class="card card-container">
+    <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" />
+    <form [formGroup]="loginForm" style="margin-left: 14%; margin-top: 14%;">
+      <div class="form-group">
+
+        <div class="p-float-label ">
+          <input pInputText id="username" formControlName="username" />
+          <label htmlFor="username" class="input-label">Username*</label>
+
+        </div>
+        <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine">
+          <div class="ui-message ui-messages-error ui-corner-all"
+            [hidden]="!loginForm.controls['username'].errors['required']">
+            Usename is required.</div>
+        </div>
+        <br />
+      </div>
+      <div class="form-group">
+        <div class="p-float-label ">
+          <p-password id="password" formControlName="password" [feedback]="false"></p-password>
+          <label for="password" class="input-label">Password*</label>
+        </div>
+
+        <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine">
+          <div class="ui-message ui-messages-error ui-corner-all"
+            [hidden]="!loginForm.controls['password'].errors['required']">
+            Password is required.</div>
+        </div>
+        <br />
+      </div>
+      <div class="form-group">
+        <button (click)="submitLogin()" class="btn btn-primary btn-block" style="width: 85%;"
+          styleClass="p-button-success" pButton>
+          Login
+        </button>
+      </div>
+      <div class="form-group" >
+        <span>New User?</span>  <a  (click)="takeAction('signup')" style="margin-left: 5%;">Register</a>
+      </div>
+    </form>
+
+
+  </div>
+</div>
+
+
+<div class="col-md-12" *ngIf="action==='signup'">
+  <div class="card card-container">
+    <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" />
+    <form [formGroup]="signupForm" style="margin-left: 14%; margin-top: 14%;">
+      <div class="form-group">
+
+        <div class="p-float-label ">
+          <input pInputText id="username" formControlName="username" />
+          <label htmlFor="username" class="input-label">Username*</label>
+
+        </div>
+        <div *ngIf="signupForm.controls['username'].errors && !signupForm.controls['username'].pristine">
+          <div class="ui-message ui-messages-error ui-corner-all"
+            [hidden]="!signupForm.controls['username'].errors['required']">
+            Username is required.</div>
+        </div>
+        <br />
+      </div>
+      <div class="form-group">
+
+        <div class="p-float-label ">
+          <input pInputText id="email" formControlName="email" />
+          <label htmlFor="email" class="input-label">Email*</label>
+
+        </div>
+        <div *ngIf="signupForm.controls['email'].errors && !signupForm.controls['email'].pristine">
+          <div class="ui-message ui-messages-error ui-corner-all"
+            [hidden]="!signupForm.controls['email'].errors['required']">
+            Email is required.</div>
+            <div class="ui-message ui-messages-error ui-corner-all"
+            [hidden]="!signupForm.controls['email'].errors['email']">
+            Invalid Email Address.</div>
+        </div>
+        
+        <br />
+      </div>
+      <div class="form-group">
+        <div class="p-float-label ">
+          <p-password id="password" formControlName="password" [feedback]="false"></p-password>
+          <label for="password" class="input-label">Password*</label>
+        </div>
+
+        <div *ngIf="signupForm.controls['password'].errors && !signupForm.controls['password'].pristine">
+          <div class="ui-message ui-messages-error ui-corner-all"
+            [hidden]="!signupForm.controls['password'].errors['required']">
+            Password is required.</div>
+        </div>
+        <br />
+      </div>
+      <div class="form-group">
+        <button (click)="submitSignup()" class="btn btn-primary btn-block" style="width: 85%;"
+          styleClass="p-button-success" pButton>
+          Register
+        </button>
+      </div>
+      <div class="form-group" >
+        <span>Already an User?</span>  <a (click)="takeAction('login')" style="margin-left: 5%;">Login</a>
+      </div>
+     
+    </form>
+ 
+
+  </div>
+</div>
