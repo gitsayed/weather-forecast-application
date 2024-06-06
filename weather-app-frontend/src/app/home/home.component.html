@@ -80,40 +80,51 @@
                                 <p-columnFilter type="text" field="feature_code" matchMode="contains"></p-columnFilter>
                             </div>
                         </th>
+                        <th> 
+
+                                Action
+                                
+                        </th>
 
                     </tr>
                 </ng-template>
 
                 <!-- ******************* main data body ************************* -->
-                <ng-template pTemplate="body" let-city let-index="rowIndex">
-                    <tr [pSelectableRow]="city" [pSelectableRowIndex]="index">
+                <ng-template pTemplate="body" let-location let-index="rowIndex">
+                    <tr [pSelectableRow]="location" [pSelectableRowIndex]="index">
                       
                    
                         <td>
-                            {{ city.name }}
+                            {{ location.name }}
                         </td>
                         <td>
-                            {{ city.country }}
+                            {{ location.country }}
                         </td>
                 
                         <td>
-                            {{ city.timezone }}
+                            {{ location.timezone }}
                         </td>
                    
                         <td>
-                            {{ city.latitude }}
+                            {{ location.latitude }}
                         </td>
                 
                         <td>
-                            {{ city.longitude }}
+                            {{ location.longitude }}
                         </td>
                  
                         <td>
-                            {{ city.country_code }}
+                            {{ location.country_code }}
                         </td>
                    
                         <td>
-                            {{ city.feature_code }}
+                            {{ location.feature_code }}
+                        </td>
+                        <td>
+                            <p-button (click)="actionClick(location)"  icon="pi pi-star" 
+                            styleClass="p-button-rounded p-button-warning p-button-outlined" 
+                             pTooltip="Save as your favourite location"></p-button>
+      
                         </td>
                     </tr>
                     

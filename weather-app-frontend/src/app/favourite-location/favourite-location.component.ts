@@ -4,6 +4,7 @@ import { MeteoLocationService } from '../location-services/meteo-location-servic
 import { ActivatedRoute, Router } from '@angular/router';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { LazyLoadEvent } from 'primeng/api';
+import { Location } from '@angular/common';
 
 const documentStyle = getComputedStyle(document.documentElement);
 
@@ -27,6 +28,7 @@ export class FavouriteLocationComponent implements OnInit {
 
   constructor(
     private toast: ToastService,
+    private location: Location,
     private router: Router,
     private route: ActivatedRoute,
     private storageService: TokenStorageService,
@@ -74,20 +76,12 @@ export class FavouriteLocationComponent implements OnInit {
 
 
 
-
-
-
-
+  goBack(event:any){
+    this.location.back();
+}
 
 }
 
 
-export class CustomLazyLoadEvent implements LazyLoadEvent {
-  public first: number;
-  constructor(
 
-  ) {
-    this.first = 10;
-  }
-}
 

@@ -28,6 +28,8 @@ export class HomeComponent implements OnInit {
 
   cityList: GeoCity[] = [];
 
+  currentUser:any;
+
   constructor(
     private toast: ToastService,
     private router: Router,
@@ -37,7 +39,7 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.currentUser = this.storageService.getCurrentUser();
   }
 
 
@@ -82,6 +84,21 @@ export class HomeComponent implements OnInit {
     table.clear();
   }
 
+  actionClick(location_detail:any){
+   location_detail.user_id= this.currentUser.id
+   this.locationService.saveFavouriteLocation(location_detail).subscribe({
+     next: res => {
+      this.loading = false;
+       this.toast.success("Favourite location has been saved successfully.");
+     },
+
+     error: err => {
+       this.loading = false;
+       this.toast.error(err.error, 'Save Operation Fail');
+     }
+   })
+
+  }
 
 }
 

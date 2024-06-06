@@ -3,22 +3,11 @@
     <div class="card flex justify-content-center" [style]="{'margin-top':'1%','margin-left':'4%', 'min-width':'92%'}">
         <div class="row">
             <div class="col-sm-6">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
+                <p-button (click)="goBack($event)" label="Back"  icon="pi pi-arrow-left" styleClass="p-button-rounded p-button-raised p-button-help"></p-button>
+      
             </div>
             <div class="col-sm-6">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
+           
             </div>
           </div>
         <table class="table table-striped" style="width: 30%; margin-top: 2%;" *ngIf="locationDetail">

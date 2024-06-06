@@ -48,7 +48,7 @@ export class WeatherForcecastComponent implements OnInit {
     private storageService: TokenStorageService,
     private locationService: MeteoLocationService,
   ) {
-    this.currentUser = storageService.getCurrentUser();
+    this.currentUser = this.storageService.getCurrentUser();
   }
 
 
