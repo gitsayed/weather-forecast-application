@@ -84,8 +84,6 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const roles : string[] = route.data['roles'] ;
   const token = localStorage.getItem('token');
-  // console.log(route);
-  // console.log(router);
 
   if (tokenStorageService.getIsLoggedIn()) {
     if (roles && roles.length > 0) {

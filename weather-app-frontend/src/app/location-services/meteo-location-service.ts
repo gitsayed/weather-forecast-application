@@ -23,10 +23,29 @@ export class MeteoLocationService extends BaseService {
     }
 
 
-    public fetchCities(payload: string): Observable<any> {
+    public fetchLocations(payload: string): Observable<any> {
         return this.http.get(
-        //    "https://geocoding-api.open-meteo.com/v1/search?name="+payload,httpOptions
-            baseURL + '/geo/cities?name=' + payload, httpOptions
+            baseURL + '/geo/location?name=' + payload, httpOptions
+        );
+    }
+
+    public saveFavouriteLocation(payload: Object): Observable<any> {
+        return this.http.post(
+            baseURL + '/favourite/location', payload, httpOptions
+        );
+    }
+
+    public fecthFavouriteLocation(map: Map<string, any>): Observable<any> {
+        let params = this.mapToHttpParams(map);
+        return this.http.get(
+            baseURL + '/favourite/location'+params, httpOptions
+        );
+    }
+
+    public fecthPagedFavouriteLocations(map: Map<string, any>): Observable<any> {
+        let params = this.mapToHttpParams(map);
+        return this.http.get(
+            baseURL + '/favourite/locations'+params, httpOptions
         );
     }
 

@@ -1,46 +1,63 @@
 <div *ngIf="!loading">
 
     <div class="card flex justify-content-center" [style]="{'margin-top':'1%','margin-left':'4%', 'min-width':'92%'}">
-        <h2>{{'Weather forecast for location: '+locationDetail?.name}}</h2>
-
-
-        <table class="table table-striped" style="width: 30%; margin-top: 2%;">
-         
-                <tr>
-                    <th scope="col">{{'City name'}}</th>
-                    <td scope="row">{{ locationDetail.name }}</td>
-                
-                </tr>
-                <tr>
-                    <th>{{'Latitude'}}</th>
-                    <td>{{ locationDetail.latitude }}</td>
-                
-                </tr>
-                
-                <tr>
-                    <th>{{'Longitude'}}</th>
-                    <td>{{ locationDetail.longitude }}</td>
-                
-                </tr>
-                
-                <tr>
-                    <th>{{'Country'}}</th>
-                    <td>{{ locationDetail.country }}</td>
-                
-                </tr> 
-                <tr>
-                    <th>{{'Timezone'}}</th>
-                    <td>{{ locationDetail.timezone }}</td>
-                
-                </tr>
+        <p-button (click)="goBack($event)" label="Back"  icon="pi pi-arrow-left" styleClass="p-button-rounded p-button-raised p-button-help"></p-button>
+        <h2 class="card-title">{{'Weather forecast for location: '}} 
+            <span style="font-weight: bolder;" >{{locationDetail?.name}}</span> 
            
+        <span style="margin-left: 5%; color: #FFB413;" 
+        pTooltip="{{favouriteLocaitonFound?'It is saved as your favourite location': 'Save as your favourite location'}}">
+        <i class="{{favouriteLocaitonFound?'pi pi-star-fill':'pi pi-star'}}"
+         style="font-size: 2.5rem" (click)="saveFavouriteLocation($event)"></i></span>
+
+    </h2>
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+        
+                <table class="table table-striped" style="width: 100%; margin-top: 2%;">
          
-        </table>
+                    <tr>
+                        <th scope="col">{{'Location name'}}</th>
+                        <td scope="row">{{ locationDetail.name }}</td>
+                    
+                    </tr>
+                    <tr>
+                        <th>{{'Latitude'}}</th>
+                        <td>{{ locationDetail.latitude }}</td>
+                    
+                    </tr>
+                    
+                    <tr>
+                        <th>{{'Longitude'}}</th>
+                        <td>{{ locationDetail.longitude }}</td>
+                    
+                    </tr>
+                    
+                    <tr>
+                        <th>{{'Country'}}</th>
+                        <td>{{ locationDetail.country }}</td>
+                    
+                    </tr> 
+                    <tr>
+                        <th>{{'Timezone'}}</th>
+                        <td>{{ locationDetail.timezone }}</td>
+                    
+                    </tr>
+               
+             
+            </table>
+          
+        </div>
+        <div class="col-sm-6 col-md-6">
+       
+        </div>
+      </div>
+
     </div>
 
     <div class="com" [style]="{'margin-top':'1%!important'}">
 
-        <div class="row" *ngIf="dailyResults.length>0">
+        <div class="row" >
           
             <p-table #dt1 [value]="dailyResults" dataKey="id" [rows]="10"
                 (onRowSelect)="onDailyWeatherForecastRowSelect($event)" selectionMode="single"

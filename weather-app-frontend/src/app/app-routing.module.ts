@@ -6,10 +6,12 @@ import { InvalidAccessComponent } from './invalid-access/invalid-access.componen
 import { AuthGuard } from './_authGuard/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { WeatherForcecastComponent } from './weather-forecast/weather-forecast.component';
+import { FavouriteLocationComponent } from './favourite-location/favourite-location.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent  , canActivate: [AuthGuard], data: {roles: ['ROLE_USER', 'ROLE_ADMIN']} },
   { path: 'weather-forecast', component: WeatherForcecastComponent  , canActivate: [AuthGuard], data: {roles: ['ROLE_USER', 'ROLE_ADMIN']} },
+  { path: 'favourite-location', component: FavouriteLocationComponent  , canActivate: [AuthGuard], data: {roles: ['ROLE_USER', 'ROLE_ADMIN']} },
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: {roles: ['ROLE_USER', 'ROLE_ADMIN']} },
   { path: 'invalid-access', component: InvalidAccessComponent },

@@ -1,38 +1,78 @@
 <div *ngIf="!loading">
-    <div class="jumbotron container-md">
-        <h1>
-            <p>{{ 'Welcome To Online Weather Forecasting Application'}}</p>
-        </h1>
+
+    <div class="card flex justify-content-center" [style]="{'margin-top':'1%','margin-left':'4%', 'min-width':'92%'}">
+        <div class="row">
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <table class="table table-striped" style="width: 30%; margin-top: 2%;" *ngIf="locationDetail">
+         
+                <tr>
+                    <th scope="col">{{'Location name'}}</th>
+                    <td scope="row">{{ locationDetail.name }}</td>
+                
+                </tr>
+                <tr>
+                    <th>{{'Latitude'}}</th>
+                    <td>{{ locationDetail.latitude }}</td>
+                
+                </tr>
+                
+                <tr>
+                    <th>{{'Longitude'}}</th>
+                    <td>{{ locationDetail.longitude }}</td>
+                
+                </tr>
+                
+                <tr>
+                    <th>{{'Country'}}</th>
+                    <td>{{ locationDetail.country }}</td>
+                
+                </tr> 
+                <tr>
+                    <th>{{'Timezone'}}</th>
+                    <td>{{ locationDetail.timezone }}</td>
+                
+                </tr>
+           
+         
+        </table>
     </div>
 
+    <div class="com" [style]="{'margin-top':'1%!important'}">
 
-
-    <div class="com">
         <div class="row">
-            <span class="p-float-label" style="margin-left: 2%; margin-bottom: 2%;">
-
-                <input pInputText id="location" [(ngModel)]="selectedCity" placeholder="Search location by name" />
-                <label htmlFor="location">Location Name</label>
-            </span>
-            <span style="margin-left: 2%;"> <p-button (click)="submitLocationName($event)" label="Search"
-                    styleClass="p-button-secondary"></p-button></span>
-
-        </div>
-        <div class="row" *ngIf="cityList.length>0">
-    
-            <p-table #dt1 [value]="cityList" dataKey="id" [rows]="10" 
-                (onRowSelect)="onLocationTableRowSelect($event)" selectionMode="single"
-                [(selection)]="selectedLocation"
-                [rowsPerPageOptions]="[10]" [loading]="loading" [paginator]="true"
+          
+            <p-table #dt1 [value]="favouriteLocations" dataKey="id"
+             [rows]="10"  [lazy]="true" [totalRecords]="totalFavouriteLocationRecords"
+             (onLazyLoad)="onFavouriteLocationInfoLazyLoad($event)"
+                (onRowSelect)="onFavouriteLocationRowSelect($event)" selectionMode="single"
+                [(selection)]="selectedRow" [rowsPerPageOptions]="[10]" [loading]="loading" [paginator]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [globalFilterFields]="['country', 'name', 'timezone', 'latitude', 'longitude',  'country_code', 'feature_code']"
-                [style]="{'border': '1px solid gray'}"
-                >
+                [globalFilterFields]="['time', 'weather_code', 'temperature_2m_min', 'temperature_2m_max', 'rain_sum',  'wind_speed_10m_max' ]"
+                [style]="{'border': '1px solid gray'}">
+
                 <ng-template pTemplate="caption">
                     <div class="flex">
-                       <h3> Geo Location Table</h3>
+                        <h3> Favourite Locations Table </h3>
                     </div>
-                    </ng-template>
+                </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
                       
@@ -120,18 +160,18 @@
                 </ng-template>
 
 
+
                 <ng-template pTemplate="emptymessage">
                     <tr>
                         <td colspan="7">No records found.</td>
                     </tr>
                 </ng-template>
             </p-table>
+
         </div>
 
+
     </div>
-</div>
 
 
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-
-

@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
@@ -15,6 +14,7 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AppLoadingSpinnerComponent } from './spinner/app-loading-spinner.component';
 import { WeatherForcecastComponent } from './weather-forecast/weather-forecast.component';
+import { FavouriteLocationComponent } from './favourite-location/favourite-location.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { WeatherForcecastComponent } from './weather-forecast/weather-forecast.c
     InvalidAccessComponent,
     LoginComponent,
     AppLoadingSpinnerComponent,
-    WeatherForcecastComponent
+    WeatherForcecastComponent,
+    FavouriteLocationComponent
   ],
   imports: [
     BrowserAnimationsModule,

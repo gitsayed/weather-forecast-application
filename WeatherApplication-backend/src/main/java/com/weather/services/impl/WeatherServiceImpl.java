@@ -36,7 +36,7 @@ public class WeatherServiceImpl implements WeatherService {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Accept", "application/json");
             headers.set("Content-Type", "application/json");
-            String customUrl = this.geoCityUrl+"?count=100&name="+city;
+            String customUrl = this.geoCityUrl+"?count=100&language=en&format=json&name="+city;
             HttpEntity entity = new HttpEntity(headers);
 
             ResponseEntity<JsonNode> response = restTemplate.exchange(customUrl, HttpMethod.GET, entity, JsonNode.class);

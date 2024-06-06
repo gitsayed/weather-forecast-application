@@ -1,9 +1,13 @@
 <div id="app">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
       <a href="/" class="navbar-brand">Weather Forecast</a>
-      <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <ul class="navbar-nav mr-auto" routerLinkActive="active" *ngIf="loggedIn">
         <li class="nav-item">
           <a href="/home" class="nav-link" routerLink="home">Home </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="/favourite-location" class="nav-link" routerLink="favourite-location">My Favourite Locations </a>
         </li>
        
       </ul>

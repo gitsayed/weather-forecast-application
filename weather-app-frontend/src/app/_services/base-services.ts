@@ -18,7 +18,6 @@ export class BaseService {
         if (map != null && map.size > 0) {
             map.forEach(( v, k) => {
                 params += k.toString() + '=' + v.toString() + '&'
-                // console.log(params);
             });
         }
         return params;

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { ToastService } from '../_services/toast.services';
 import { Table } from 'primeng/table';
@@ -25,7 +24,7 @@ export class HomeComponent implements OnInit {
 
   selectedCity = '';
 
-  selectedLocation :any = '';
+  selectedLocation: any = '';
 
   cityList: GeoCity[] = [];
 
@@ -34,46 +33,49 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private locationService: MeteoLocationService,
-    private storageService: TokenStorageService,
-    private userService: UserService) { }
+    private storageService: TokenStorageService) { }
 
 
   ngOnInit() {
-
-    // this.router.navigate(['/weather-forecast']);
 
   }
 
 
   onCityChanges(event: any) {
-    console.log('city :: ', event);
 
   }
 
-  submitCityName(event: any) {
+  submitLocationName(event: any) {
     this.loading = true;
-    this.locationService.fetchCities(this.selectedCity).subscribe({
+    this.locationService.fetchLocations(this.selectedCity).subscribe({
       next: (res) => {
-        this.loading= false;
-        this.cityList = res.results;
-        if (this.cityList) {
-          this.toast.success("Total : " + this.cityList.length + " Cities found.");
-          this.loading=false;
+        this.loading = false;
+        
+        if ('results' in res) {
+          this.cityList = res.results;
+          if (this.cityList) {
+            this.toast.success("Total : " + this.cityList.length + " Locations found.");
+            this.selectedCity='';
+            this.loading = false;
+          }
+        } else {
+          this.toast.info("No location found.");
+          this.loading = false;
         }
       },
       error: err => {
-        this.loading= false;
-        this.toast.error(err.error.message, 'Http Error');
+        this.loading = false;
+        this.toast.error(err.message, 'Http Error');
       }
     })
 
   }
 
 
-  onCityTableRowSelect(event:any){
-    this.toast.info( 'Selected City : '+ event.data.name);
-    this.router.navigate(['weather-forecast'], {queryParams:{location_detail: JSON.stringify(event.data)}});
-    
+  onLocationTableRowSelect(event: any) {
+    this.toast.info('Selected Location : ' + event.data.name);
+    this.router.navigate(['weather-forecast'], { queryParams: { location_detail: JSON.stringify(event.data) } });
+
   }
 
   clear(table: Table) {

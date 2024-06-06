@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
-import { TokenStorageService } from '../_services/token-storage.service';
 import { ToastService } from '../_services/toast.services';
-import { Table } from 'primeng/table';
 import { MeteoLocationService } from '../location-services/meteo-location-service';
-import { GeoCity, Model } from '../model/city-location.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TokenStorageService } from '../_services/token-storage.service';
+import { Location } from '@angular/common';
 
 const documentStyle = getComputedStyle(document.documentElement);
 const textColor = documentStyle.getPropertyValue('--text-color');
-const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
 @Component({
   selector: 'app-weather-forcecast',
   templateUrl: './weather-forecast.component.html',
@@ -21,7 +18,7 @@ export class WeatherForcecastComponent implements OnInit {
 
 
   loading: boolean = false;
-
+  favouriteLocaitonFound: boolean = false;
   locationDetail: any;
 
   forecastDays = '16';
@@ -41,20 +38,26 @@ export class WeatherForcecastComponent implements OnInit {
   chartOptions: any;
   chartDataSet: any;
 
+  currentUser: any;
+
   constructor(
     private toast: ToastService,
+    private location: Location,
     private router: Router,
     private route: ActivatedRoute,
+    private storageService: TokenStorageService,
     private locationService: MeteoLocationService,
-  ) { }
+  ) {
+    this.currentUser = storageService.getCurrentUser();
+  }
 
 
   ngOnInit() {
+
     this.route.queryParams.subscribe((params) => {
       this.locationDetail = JSON.parse(params['location_detail']);
-      console.log('locationDetail ', this.locationDetail);
       this.fetchDailyWeatherForecastInfo(this.locationDetail, this.forecastDays, this.dailyForecastVariables);
-
+      this.getFavouriteLocationDetail(this.currentUser.id, this.locationDetail.id);
     });
 
 
@@ -71,7 +74,6 @@ export class WeatherForcecastComponent implements OnInit {
     this.locationService.fetchDailyWeatherForecastInfo(params).subscribe({
       next: (res) => {
         this.loading = false;
-        console.log('res', res);
         if (res) {
           this.daily_units = res.daily_units;
           let tempArr = res.daily.time;
@@ -121,7 +123,6 @@ export class WeatherForcecastComponent implements OnInit {
     this.locationService.fetchHourlyWeatherForecastInfo(params).subscribe({
       next: (res) => {
         this.modalLoading = false;
-        console.log('Houlry', res);
         if (res) {
           this.arrangeCharDataSet(res);
           this.hourlyResults = [];
@@ -178,7 +179,6 @@ export class WeatherForcecastComponent implements OnInit {
           label: 'Temperature 2m',
           data: data.hourly.temperature_2m,
           fill: false,
-          tension: 0.4,
           backgroundColor: '#FF0000',
           borderColor: '#FF0000'
         },
@@ -186,58 +186,56 @@ export class WeatherForcecastComponent implements OnInit {
           label: 'Apparent Temperature',
           data: data.hourly.apparent_temperature,
           fill: false,
-          tension: 0.4,
-          borderColor: '#16F529',
-          backgroundColor: '#16F529'
+
+          borderColor: '#04AA6D',
+          backgroundColor: '#04AA6D'
         },
         {
           label: 'Rain',
           data: data.hourly.rain,
           fill: false,
           borderColor: '#0000FF',
-          tension: 0.4,
+
           backgroundColor: '#0000FF'
         },
-        {
-          label: 'Pressure msl',
-          data: data.hourly.pressure_msl,
-          fill: false,
-          borderColor: '#20B2AA',
-          tension: 0.4,
-          backgroundColor: '#20B2AA'
-        },
-        {
-          label: 'Surface Pressure',
-          data: data.hourly.surface_pressure,
-          fill: false,
-          type: 'line',
-          borderColor: '#e52165',
-          tension: 0.4,
-          backgroundColor: '#e52165'
-        },
-        {
-          label: 'Visibility',
-          data: data.hourly.visibility,
-          fill: false,
-          type: 'line',
-          borderColor: '#0000FF',
-          tension: 0.4,
-          backgroundColor: '#0000FF'
-        },
+        // {
+        //   label: 'Pressure msl',
+        //   data: data.hourly.pressure_msl,
+        //   fill: false,
+        //   borderColor: '#20B2AA',
+        //   
+        //   backgroundColor: '#20B2AA'
+        // },
+        // {
+        //   label: 'Surface Pressure',
+        //   data: data.hourly.surface_pressure,
+        //   fill: false,
+        //   type: 'line',
+        //   borderColor: '#e52165',
+        //   
+        //   backgroundColor: '#e52165'
+        // },
+        // {
+        //   label: 'Visibility',
+        //   data: data.hourly.visibility,
+        //   fill: false,
+        //   type: 'line',
+        //   borderColor: '#0000FF',
+        //   
+        //   backgroundColor: '#0000FF'
+        // },
         {
           label: 'Wind speed 10m',
           data: data.hourly.wind_speed_10m,
           fill: false,
-          borderColor: '#e2d810',
-          tension: 0.4,
-          backgroundColor: '#e2d810'
+          borderColor: '#FF8C00',
+          backgroundColor:  '#FF8C00'
         },
         {
           label: 'Wind speed 80m',
           data: data.hourly.wind_speed_80m,
           fill: false,
           borderColor: '#00FF00',
-          tension: 0.4,
           backgroundColor: '#00FF00'
         },
         {
@@ -245,7 +243,7 @@ export class WeatherForcecastComponent implements OnInit {
           data: data.hourly.temperature_80m,
           fill: false,
           borderColor: '#FFD700',
-          tension: 0.4,
+
           backgroundColor: '#FFD700'
         },
         {
@@ -253,16 +251,16 @@ export class WeatherForcecastComponent implements OnInit {
           data: data.hourly.temperature_180m,
           fill: false,
           borderColor: '#DE3163',
-          tension: 0.4,
+
           backgroundColor: '#DE3163'
         },
         {
           label: 'Day/Night',
           data: data.hourly.is_day,
           fill: false,
-          borderColor: '#9FE2BF',
-          tension: 0.4,
-          backgroundColor: '#9FE2BF'
+          borderColor: '#FF00FF',
+
+          backgroundColor: '#FF00FF'
         }
       ]
     };
@@ -274,25 +272,26 @@ export class WeatherForcecastComponent implements OnInit {
       plugins: {
         legend: {
           labels: {
-            color: textColor
+            color: '#808080'
           }
         }
       },
       scales: {
         x: {
           ticks: {
-            color: textColorSecondary
+            color: '#000000',
+            font_weight:'bold'
           },
           grid: {
-            color: surfaceBorder
+            color: '#808080'
           }
         },
         y: {
           ticks: {
-            color: textColorSecondary
+            color: '#000000',
           },
           grid: {
-            color: surfaceBorder
+            color: '#808080'
           }
         }
       }
@@ -302,6 +301,55 @@ export class WeatherForcecastComponent implements OnInit {
   }
 
 
+  saveFavouriteLocation(event: any) {
+    if (this.favouriteLocaitonFound) {
+      this.toast.warn("It is alreday saved as your favourite location!");
+      return;
+    }
+    this.locationDetail.user_id= this.currentUser.id
+    this.locationService.saveFavouriteLocation(this.locationDetail).subscribe({
+      next: res => {
+        this.toast.success("Favourite location has been saved successfully.");
+        this.favouriteLocaitonFound = true;
+      },
+
+      error: err => {
+        this.loading = false;
+        this.toast.error(err.error, 'Save Operation Fail');
+      }
+    })
+
+
+  }
+
+
+  getFavouriteLocationDetail(userId:any, locationId:any) {
+
+    let map = new Map<string, any>();
+    map.set('userId', userId);
+    map.set('locationId', locationId);
+
+    this.locationService.fecthFavouriteLocation(map).subscribe({next:res=>{
+
+      if(res){
+        if(res.id==this.locationDetail.id && 
+          res.latitude==this.locationDetail.latitude && 
+          res.longitude == this.locationDetail.longitude &&
+          res.user_id == this.currentUser.id
+        ){
+          this.favouriteLocaitonFound = true;
+        this.toast.success('This is one of your favourite location.');
+        }
+        
+      }
+    },
+    error: err => {
+      this.toast.error(err.error, 'Http Error');
+    }
+  })
+
+
+  }
 
 
   onCloseHourlyModal(event: any) {
@@ -311,10 +359,14 @@ export class WeatherForcecastComponent implements OnInit {
   }
 
   onHourlyWeatherForecastRowSelect(event: any) {
-    this.toast.info('Selected Day : ' + event.data.time);
-    // this.router.navigate(['weather-forecast'], {queryParams:{location_detail: JSON.stringify(event.data)}});
+    this.toast.info('Selected Time : ' + event.data.time);
 
   }
+
+
+  goBack(event:any){
+    this.location.back();
+}
 
 
 }

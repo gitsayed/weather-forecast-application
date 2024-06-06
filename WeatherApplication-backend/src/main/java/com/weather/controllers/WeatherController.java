@@ -18,7 +18,7 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
-    @GetMapping("/cities")
+    @GetMapping("/location")
     public ResponseEntity<?> getGeoCOdeCityByName(@RequestParam String name) {
         return weatherService.getGeoCodeCities(name);
     }

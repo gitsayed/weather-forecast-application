@@ -17,7 +17,7 @@ import { PasswordModule } from 'primeng/password';
 import { DataViewModule } from 'primeng/dataview';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ChartModule } from 'primeng/chart';
-
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
     declarations: [
@@ -40,7 +40,9 @@ import { ChartModule } from 'primeng/chart';
    PasswordModule,
    DataViewModule,
    ProgressSpinnerModule,
-   ChartModule
+   ChartModule,
+   TooltipModule
+   
   
     ],
     exports: [
@@ -59,7 +61,8 @@ import { ChartModule } from 'primeng/chart';
    InputTextModule,
    PasswordModule,
    ProgressSpinnerModule,
-   ChartModule
+   ChartModule,
+   TooltipModule
    
 
     ],
