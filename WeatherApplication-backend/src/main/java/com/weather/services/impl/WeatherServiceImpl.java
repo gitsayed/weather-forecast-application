@@ -38,7 +38,7 @@ public class WeatherServiceImpl implements WeatherService {
             headers.set("Content-Type", "application/json");
             String customUrl = this.geoCityUrl+"?count=100&language=en&format=json&name="+city;
             HttpEntity entity = new HttpEntity(headers);
-
+            log.info("Calling: {}", this.geoCityUrl);
             ResponseEntity<JsonNode> response = restTemplate.exchange(customUrl, HttpMethod.GET, entity, JsonNode.class);
             return response;
         } catch (Exception e) {
@@ -56,7 +56,7 @@ public class WeatherServiceImpl implements WeatherService {
         String customUrl = this.geoForecastUrl+"?latitude="+latitude+"&longitude="+longitude+
                 "&forecast_days="+forecast_days+"&daily="+ dailyList;
         HttpEntity entity = new HttpEntity(headers);
-
+        log.info("Calling: {}", this.geoForecastUrl);
         ResponseEntity<JsonNode> response = restTemplate.exchange(customUrl, HttpMethod.GET, entity, JsonNode.class);
         return response;
     }

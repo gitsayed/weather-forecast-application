@@ -41,7 +41,7 @@ public class FavouriteServiceImpl implements FavouriteService {
 
     @Override
     public ResponseEntity<?> fetchFavouriteLocationPageResult(Integer userId, Integer locationId, Pageable pageable) {
-//        PagedModel pagedModel= PagedModel;
+
         if (userId == null && locationId == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No 'userId' or 'locationId' request parameter found.");
         }
