@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/favourite")
+@RequestMapping("/v1/favourite")
 public class FavouriteController {
   private final FavouriteService favouriteService;
 

@@ -43,3 +43,17 @@ To setup this project steps are as follows:
 * Check if this message appears in your terminal `Tomcat started on port 7070 (http) with context path '/weather'`
 * Or, you can define your own port number. For that you must be declared of your port in this file `/weather-forecast-application/WeatherApplication-backend/src/main/resources/application.properties` in `server.port=` area
 * Now your backend Weather forecasting application is running successfully.
+
+### Developed APIs
+
+* `"/weather/v1/auth/signup"`, Method `POST`
+* `"/weather/v1/auth/signin"`, Method `POST`
+* `"/weather/v1/auth/refresh_token"`, Method `POST`
+* `"/weather/v1/favourite/location"`, Method `POST`
+* `"/weather/v1/favourite/location"`, Method `POST`
+* `"/weather/v1/favourite/location"`, Method `GET`
+* `"/weather/v1/favourite/locations"`, Method `GET`
+* `"/weather/v1/geo/location"`, Method `GET`
+* `"/weather/v1/geo/location"`, Method `GET`
+* `"/weather/v1/geo/daily-weather-forecast"`, Method `GET`
+* `"/weather/v1/geo/hourly-weather-forecast"`, Method `GET`

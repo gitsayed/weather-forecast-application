@@ -47,25 +47,6 @@ public class AuthController {
     ) {
         return authenticationService.refreshToken(request, response);
     }
-    private void saveUserToken(String accessToken, String refreshToken, UserEntity user) {
-        TokenEntity token = new TokenEntity();
-        token.setAccessToken(accessToken);
-        token.setRefreshToken(refreshToken);
-        token.setLoggedOut(false);
-        token.setUser(user);
-        tokenRepository.save(token);
-    }
 
-    private void revokeAllTokenByUser(UserEntity user) {
-        List<TokenEntity> validTokens = tokenRepository.findAllAccessTokensByUser(user.getId());
-        if(validTokens.isEmpty()) {
-            return;
-        }
 
-        validTokens.forEach(t-> {
-            t.setLoggedOut(true);
-        });
-
-        tokenRepository.saveAll(validTokens);
-    }
 }

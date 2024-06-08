@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/geo/")
+@RequestMapping("/v1/geo/")
 public class WeatherController {
 
     private final WeatherService weatherService;
