@@ -9,11 +9,13 @@ import com.weather.services.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
+
+@Slf4j
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/v1/auth")
@@ -31,12 +33,14 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        log.info("Trying to signin");
         return authenticationService.signIn(loginRequest);
 
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> signupUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        log.info("Trying to signup");
         return authenticationService.signUp(signUpRequest);
     }
 
@@ -45,6 +49,7 @@ public class AuthController {
             HttpServletRequest request,
             HttpServletResponse response
     ) {
+        log.info("Trying to get refresh token");
         return authenticationService.refreshToken(request, response);
     }
 

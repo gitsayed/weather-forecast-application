@@ -23,6 +23,7 @@ public class FavouriteController {
 
     @PostMapping("/location")
     public ResponseEntity<?> saveFavouriteLocation(@Valid @RequestBody FavouriteLocationDto dto){
+        log.info("Trying to save location");
         favouriteService.saveFavouriteLocation(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
@@ -31,6 +32,7 @@ public class FavouriteController {
     public ResponseEntity<?> getFavouriteLocation(
             @RequestParam Integer userId,
             @RequestParam Integer locationId ){
+        log.info("Trying to get location");
         return favouriteService.getFavouriteLocation(userId, locationId);
 
     }
@@ -39,6 +41,7 @@ public class FavouriteController {
             @RequestParam(required = false) Integer userId,
             @RequestParam(required = false) Integer locationId,
             Pageable pageable){
+        log.info("Trying to save locations");
         return favouriteService.fetchFavouriteLocationPageResult(userId, locationId, pageable);
 
     }

@@ -30,6 +30,7 @@ public class WeatherController {
             @RequestParam String forecast_days,
             @RequestParam String daily
             ) {
+        log.info("Trying to get daily-weather-forecast");
         return weatherService.getDailyWeatherForecast(latitude, longitude,forecast_days,  daily );
     }
 
@@ -41,7 +42,7 @@ public class WeatherController {
             @RequestParam String end_date,
             @RequestParam String hourly
     ) {
-        log.info("Calling: /hourly-weather-forecast");
+        log.info("Trying to get hourly-weather-forecast");
         return weatherService.getHourlyWeatherForecast(latitude, longitude, start_date, end_date, hourly );
     }
 
