@@ -43,10 +43,6 @@ export class HomeComponent implements OnInit {
   }
 
 
-  onCityChanges(event: any) {
-
-  }
-
   submitLocationName(event: any) {
     this.loading = true;
     this.locationService.fetchLocations(this.selectedCity).subscribe({
@@ -80,9 +76,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  clear(table: Table) {
-    table.clear();
-  }
+
 
   actionClick(location_detail:any){
    location_detail.user_id= this.currentUser.id
