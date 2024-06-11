@@ -13,10 +13,16 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authReq = req;
+    let httpHeaders = req.headers.keys();
     const token = this.token.getToken();
-    if (token != null) {
+ 
+    if (token != null && (!req.url.includes('https')||req.url.includes('localhost')||req.url.includes('127.0.0.1'))) {
       authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
-    }
+    }else{
+      httpHeaders.forEach(k=>{
+        authReq = authReq.clone({ headers: authReq.headers.delete(k) });
+      });
+    }   
     
     return next.handle(authReq);
   }

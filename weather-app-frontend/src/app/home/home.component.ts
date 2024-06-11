@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { ToastService } from '../_services/toast.services';
 import { Table } from 'primeng/table';
-import { MeteoLocationService } from '../location-services/meteo-location-service';
+import { MeteoLocationService, httpOptions } from '../location-services/meteo-location-service';
 import { GeoCity } from '../model/city-location.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit {
     private toast: ToastService,
     private router: Router,
     private route: ActivatedRoute,
+    private httpClient: HttpClient,
     private locationService: MeteoLocationService,
     private storageService: TokenStorageService) { }
 
@@ -42,8 +44,21 @@ export class HomeComponent implements OnInit {
     this.currentUser = this.storageService.getCurrentUser();
   }
 
+  loadDocument(name: string) {
+    const url = 'https://geocoding-api.open-meteo.com/v1/search?name='+name; 
+
+    this.httpClient.get(url)
+      .pipe(
+    
+      ).subscribe(response => {
+        console.log('loadDocument ', response);   
+        // console.log(JSON.parse(response));   
+      
+      });
+  }
 
   submitLocationName(event: any) {
+    // this.loadDocument(this.selectedCity);
     this.loading = true;
     this.locationService.fetchLocations(this.selectedCity).subscribe({
       next: (res) => {
@@ -65,7 +80,7 @@ export class HomeComponent implements OnInit {
         this.loading = false;
         this.toast.error(err.message, 'Http Error');
       }
-    })
+    });
 
   }
 
