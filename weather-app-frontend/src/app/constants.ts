@@ -1,7 +1,7 @@
 import { HttpHeaders } from "@angular/common/http";
 
 
-export const baseURL = 'http://localhost:9000/weather';
+export const baseURL = 'http://localhost:1700/weather';
 
 export const AUTH_API = baseURL +'/v1/auth';
 
