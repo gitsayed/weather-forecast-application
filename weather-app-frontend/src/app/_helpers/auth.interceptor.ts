@@ -16,6 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
     let httpHeaders = req.headers.keys();
     const token = this.token.getToken();
  
+    // authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
     if (token != null && (!req.url.includes('https')||req.url.includes('localhost')||req.url.includes('127.0.0.1'))) {
       authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
     }else{

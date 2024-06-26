@@ -43,7 +43,7 @@ To setup this project steps are as follows:
 * Go to this backend directory `/weather-forecast-application/WeatherApplication-backend`
 * Open a CMD terminal and run this command `mvn clean ` and wait some moments until your terminal shows this message `BUILD SUCCESS`
 * Next run this command `mvn spring-boot:run`
-* Check if this message appears in your terminal `Tomcat started on port 7070 (http) with context path '/weather'` 
+* Check if this message appears in your terminal `Tomcat started on port 1700 (http) with context path '/weather'` 
 * Or, you can define your own port number. For that you must be declared of your port in this file `/weather-forecast-application/WeatherApplication-backend/src/main/resources/application.properties` in `server.port=` area
 * Now your backend Weather forecasting application is running successfully.
 

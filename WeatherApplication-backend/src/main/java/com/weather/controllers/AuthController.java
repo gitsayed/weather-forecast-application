@@ -2,8 +2,6 @@ package com.weather.controllers;
 
 import com.weather.dto.LoginRequest;
 import com.weather.dto.SignupRequest;
-import com.weather.entity.TokenEntity;
-import com.weather.entity.UserEntity;
 import com.weather.repositories.TokenRepository;
 import com.weather.services.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +10,6 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 
 @Slf4j
@@ -32,7 +29,7 @@ public class AuthController {
 
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest httpServletRequest) {
         log.info("Trying to signin");
         return authenticationService.signIn(loginRequest);
 

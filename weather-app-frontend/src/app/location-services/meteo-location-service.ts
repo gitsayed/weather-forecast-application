@@ -25,8 +25,8 @@ export class MeteoLocationService extends BaseService {
 
     public fetchLocations(payload: string): Observable<any> {
         return this.http.get(
-            // baseURL + '/v1/geo/location?name=' + payload, httpOptions
-            METEO_CITY_SEARCH + '?name=' + payload, httpOptions
+            baseURL + '/v1/geo/location?name=' + payload, httpOptions
+            // METEO_CITY_SEARCH + '?name=' + payload, httpOptions
         );
     }
 
@@ -62,6 +62,7 @@ export class MeteoLocationService extends BaseService {
         let params = this.mapToHttpParams(map);
         return this.http.get(
             baseURL + '/v1/geo/hourly-weather-forecast' + params, httpOptions
+            // 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m'
         );
     }
 
